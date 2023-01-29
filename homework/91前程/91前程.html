@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>91前程</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.7.6/css/layui.css" integrity="sha512-SSF+OBDODWTSIqOivYBOyOKQ93PBDevipJEUEWtkUbTt4v34rmgPcCXcBMolxZIJcuobcdqmYJlonjUBEbOzNw==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.7.6/layui.js" integrity="sha512-mIKH3M2bRlIyhG4tBEbJ8dn8t8JFlNJU2NXlJePgpQ72CK4jAYsZyCGFcASRGtPBbcAQhz67KTkA1Jw6Kizk9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./css/font_1790320_iwlog8yiym.css">
+    <link rel="stylesheet" href="./css/yangshi.css">
+    <style>
+        .xiaochengxu {
+            position: fixed;
+            top: 200px;
+            left: 20px;
+        }
+        
+        .menu_lunbo {
+            margin-top: 30px;
+        }
+        
+        .search_menu {
+            width: 24%;
+            height: 520px;
+            background-color: #FFF;
+            float: left;
+        }
+        
+        .lunbotu {
+            margin-left: 15px;
+            width: 74%;
+            height: 520px;
+            float: right;
+        }
+        
+        .menu_header {
+            height: 44px;
+        }
+        
+        .menu_header_content {
+            float: left;
+            width: 50%;
+            text-align: center;
+            background-color: #FFF;
+        }
+        
+        .menu_header_content>a {
+            line-height: 46px;
+            color: #515a6e;
+            display: block;
+            font-size: 14px;
+        }
+        
+        .menu_header_active {
+            background-color: #0cbb92;
+        }
+        
+        .menu_header_active>a {
+            color: white;
+            font-weight: 600;
+        }
+        
+        .menu_body {
+            height: calc(100% - 44px);
+            width: 100%;
+            box-shadow: -5px 0 10px -5px #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .job_body {
+            width: 100%;
+            height: 85px;
+            box-shadow: 5px 0 10px -5px #ddd;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .job_active {
+            border: 1px solid #0cbb92;
+            height: 83px;
+            border-right: #FFF;
+        }
+        
+        .show_all {
+            border-top: 1px dashed #ddd;
+            display: flex;
+            align-items: center;
+            height: 49px;
+            padding-left: 15px;
+            cursor: pointer;
+            color: #0cbb92;
+        }
+        
+        .job_title {
+            display: flex;
+            padding: 15px;
+            padding-left: 20px;
+            justify-content: space-between;
+            color: black;
+        }
+        
+        .job_description {
+            padding-left: 20px;
+            color: #777777;
+        }
+        
+        .job_title>div {
+            font-size: 16px;
+            font-weight: bolder;
+        }
+        
+        .job_content {
+            width: 700px;
+            min-height: 150px;
+            background-color: #FFF;
+            top: -1px;
+            left: 287px;
+            position: absolute;
+            border: 1px solid #0cbb92;
+            padding: 20px;
+            z-index: 9999;
+        }
+        
+        .jb_content {
+            display: grid;
+            grid-template-columns: 1.5fr 8fr;
+        }
+        
+        .jb_content>div:nth-child(odd) {
+            font-weight: bolder;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .jb_content>div:nth-child(even) {
+            color: #777777;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .jb_content span {
+            margin-right: 8px;
+            margin-bottom: 10px;
+            padding: 0 3px
+        }
+        
+        .jb_content span:hover {
+            color: white;
+            background-color: #0cbb92;
+        }
+        
+        .lunbotu_grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .lunbotu_grid>* {
+            margin: 10px;
+            height: 140px;
+            cursor: pointer;
+        }
+        
+        .lunbotu_grid>*:nth-child(2) {
+            margin-left: 0px;
+        }
+        
+        .lunbotu_grid>*:nth-child(5) {
+            margin-right: 0px;
+        }
+        
+        .lunbo_box {
+            margin: 0px;
+            grid-column-start: 1;
+            grid-column-end: 5;
+            height: 370px;
+            position: relative;
+        }
+        
+        #lunbo_left {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            height: 30px;
+            width: 30px;
+            font-size: 15px;
+            background-color: rgba(31, 45, 61, .11);
+            color: #FFF;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bolder;
+        }
+        
+        #lunbo_right {
+            position: absolute;
+            top: 50%;
+            height: 30px;
+            width: 30px;
+            font-size: 15px;
+            background-color: rgba(31, 45, 61, .11);
+            border-radius: 50px;
+            color: #FFF;
+            right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bolder;
+        }
+        
+        #lunbo_right:hover,
+        #lunbo_left:hover {
+            background-color: rgba(31, 45, 61, .5);
+            ;
+        }
+        
+        .zixun {
+            position: fixed;
+            top: 180px;
+            right: 5px;
+        }
+        
+        .zixun_box {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .phone,
+        .wechat,
+        .jisu {
+            width: 54px;
+            height: 54px;
+            padding-top: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #FFF;
+            box-shadow: 0 2px 11px 0 #ddd;
+            position: relative;
+        }
+        
+        .zixun_box span {
+            font-size: 10px;
+        }
+        
+        .zixun_box i {
+            display: block;
+            width: 22px;
+            height: 22px;
+            margin: 0 auto;
+            margin-top: 5px;
+            margin-bottom: 2px;
+            background-size: 22px 22px;
+        }
+        
+        .phone>i {
+            background-image: url("./img/phone.png");
+        }
+        
+        .wechat>i {
+            background-image: url(./img/wechat.png);
+        }
+        
+        .jisu>i {
+            background-image: url(./img/jisu.png);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="home">
+        <!-- 小程序 -->
+        <div class="xiaochengxu">
+            <img src="./img/xiaochengxu.png" alt="">
+        </div>
+
+        <!-- 咨询 -->
+        <div class="zixun">
+            <div class="zixun_box">
+                <div class="phone">
+                    <i></i>
+                    <span>咨询热线</span>
+                </div>
+                <div class="wechat">
+                    <i></i>
+                    <span>关注微信</span>
+                </div>
+                <div class="jisu">
+                    <i></i>
+                    <span>急速求职</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header_content">
+                <!-- 头部左侧logo -->
+                <img src="img/header_logo.png" class="header_logo" />
+                <!-- 头部导航栏 -->
+                <ul class="header_nav">
+                    <li style="color: #0cbb92;">首页</li>
+                    <li>全职网申</li>
+                    <li>实习</li>
+                    <li style="color:#ff6011">
+                        双选会
+                        <img src="img/header_li_logo.png" class="header_li_logo" />
+                    </li>
+                    <li>资讯</li>
+                </ul>
+                <!-- 头部右侧  我要招聘、登录注册 -->
+                <div class="header_right">
+                    <!-- 我要招聘 -->
+                    <div class="left">
+                        <a href="">
+                            <i data-v-99d13b62="" class="iconfont icon-zhaopinpeizhi"></i>
+                            <span>我要招聘</span>
+                        </a>
+                    </div>
+                    <!-- 登录注册 -->
+                    <div class="right">
+                        <i data-v-99d13b62="" class="iconfont icon-qiuzhi1"></i>
+                        <span>求职者登录</span>
+                        <label>/</label>
+                        <span>注册</span>
+                    </div>
+                </div>
+                <!-- 消息 -->
+                <div class="chat">
+                    <img src="img/chat.png" alt="">
+                    <spawn>消息</spawn>
+                </div>
+            </div>
+        </div>
+        <!-- 头部提示栏 -->
+        <div class="header_notice">
+            为了让您拥有最佳浏览效果，91前程校园招聘平台推荐您使用：谷歌浏览器 火狐浏览器 360安全浏览器（极速模式），并使用极速模式进行操作，1080及以上分辨率，文本与应用等项目的大小（缩放与布局）125%及以下效果更佳。
+            <i id="header_notice_close" data-v-99d13b62></i>
+        </div>
+
+        <!-- 主内容 -->
+        <div class="main_contents">
+            <div class="search">
+                <div class="search_left">
+
+                    <div class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="search_select">
+                                <select lay-verify="">
+                                <option >全职</option>
+                                <option >实习</option>
+                            </select>
+                            </div>
+                            <div class="layui-input-block search_input">
+                                <input type="text" name="title" required lay-verify="required" placeholder="请输入要搜索的公司或者职位" autocomplete="off" class="layui-input search_ipt">
+                                <i data-v-a484564c="" class="iconfont icon-jiansuo1 search_icon"></i>
+                            </div>
+                            <button type="button" class="layui-btn search_btn">搜索</button>
+                        </div>
+                    </div>
+                    <div class="hots">
+                        <div class="hots_title">热门搜索：</div>
+                        <div class="hots_content">
+                            <a href="">销售</a>
+                            <a href="">Java</a>
+                            <a href="">UI设计</a>
+                            <a href="">金融</a>
+                            <a href="">计算机</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="search_right">
+                    <div class="search_total">176695</div>
+                    <div class="search_text">共计176695次的求职选择</div>
+                </div>
+            </div>
+
+            <div class="menu_lunbo">
+                <div class="search_menu">
+                    <div class="menu_header">
+                        <div id="zhiwei_search" class="menu_header_content menu_header_active">
+                            <a>职位搜索</a>
+                        </div>
+                        <div id="zhuanye_search" class="menu_header_content">
+                            <a>专业搜索</a>
+                        </div>
+                    </div>
+                    <div class="menu_body" id="menu1">
+                        <!-- 一个内容 -->
+                        <div class="job_body" id="job1">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>销售/商务拓展</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">销售顾问 商务拓展</div>
+                                </div>
+                                <div class="job_content none">
+                                    <div class="jb_content">
+                                        <div>销售顾问</div>
+                                        <div>
+                                            <span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">汽车销售</span><span data-v-37e9c0ae="">健康顾问</span><span data-v-37e9c0ae="">招生</span><span data-v-37e9c0ae="">促销导购</span><span data-v-37e9c0ae="">大客户代表</span>
+                                            <span data-v-37e9c0ae="">电话销售</span><span data-v-37e9c0ae="">房产销售</span><br><span data-v-37e9c0ae="">客户代表</span><span data-v-37e9c0ae="">商品销售</span><span data-v-37e9c0ae="">外贸销售</span><span data-v-37e9c0ae="">网络销售</span>
+                                            <span data-v-37e9c0ae="">销售工程师</span>
+                                            <span data-v-37e9c0ae="">销售顾问</span><span data-v-37e9c0ae="">销售经理</span><span data-v-37e9c0ae="">销售专员</span><span data-v-37e9c0ae="">医疗器械销售</span><span data-v-37e9c0ae="">医药销售</span><span data-v-37e9c0ae="">保险业务</span>
+                                        </div>
+                                        <div>商务拓展</div>
+                                        <div><span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">BD商务拓展</span><span data-v-37e9c0ae="">广告业务拓展</span><span data-v-37e9c0ae="">渠道销售</span><span data-v-37e9c0ae="">营销推广</span><span data-v-37e9c0ae="">招商</span></div>
+                                        <div>销售管理</div>
+                                        <div>
+                                            <span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">城市经理</span><span data-v-37e9c0ae="">销售督导</span><span data-v-37e9c0ae="">销售管理</span><span data-v-37e9c0ae="">销售总监</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="job_body" id="job2">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>人事/行政/财务/法务</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">文员/助理 人事</div>
+                                </div>
+                                <div class="job_content none">
+                                    <div class="jb_content">
+                                        <div>文员/助理</div>
+                                        <div><span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">IT技术文员/助理</span><span data-v-37e9c0ae="">产品助理</span><span data-v-37e9c0ae="">单证员</span><span data-v-37e9c0ae="">电脑操作/打字/录入员</span><span data-v-37e9c0ae="">订单处理员</span>
+                                            <br><span data-v-37e9c0ae="">秘书/文员</span><span data-v-37e9c0ae="">培训助理/助教</span><span data-v-37e9c0ae="">前台/总机/接待</span><span data-v-37e9c0ae="">设计师助理</span><span data-v-37e9c0ae="">生产文员</span><span data-v-37e9c0ae="">统计员</span>
+                                            <span data-v-37e9c0ae="">投资助理</span><br><span data-v-37e9c0ae="">项目计划合约专员</span><span data-v-37e9c0ae="">销售助理</span><span data-v-37e9c0ae="">信息披露专员</span><span data-v-37e9c0ae="">证券事务代表</span><span data-v-37e9c0ae="">助教</span>
+                                            <span data-v-37e9c0ae="">助理</span></div>
+                                        <div>人事</div>
+                                        <div><span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">HRBP</span><span data-v-37e9c0ae="">工会</span><span data-v-37e9c0ae="">绩效考核经理</span><span data-v-37e9c0ae="">绩效考核专员</span><span data-v-37e9c0ae="">培训经理/主管</span>
+                                            <span data-v-37e9c0ae="">培训专员/助理</span><br><span data-v-37e9c0ae="">企业文化</span><span data-v-37e9c0ae="">人力资源顾问</span><span data-v-37e9c0ae="">人力资源经理/主管</span><span data-v-37e9c0ae="">人力资源专员</span><span data-v-37e9c0ae="">人力资源总监</span>
+                                            <br><span data-v-37e9c0ae="">人事信息系统(HRIS)管理</span><span data-v-37e9c0ae="">社保专员</span><span data-v-37e9c0ae="">薪酬福利</span><span data-v-37e9c0ae="">员工关系</span><span data-v-37e9c0ae="">招聘</span><span data-v-37e9c0ae="">组织发展</span>
+                                            <span data-v-37e9c0ae="">人事测评</span></div>
+                                        <div>行政</div>
+                                        <div>
+                                            <span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">党工团干事</span><span data-v-37e9c0ae="">行政主管/办公室主任</span><span data-v-37e9c0ae="">行政专员</span><span data-v-37e9c0ae="">行政总监</span><span data-v-37e9c0ae="">内勤/后勤</span>
+                                            <span data-v-37e9c0ae="">销售行政主管</span><span data-v-37e9c0ae="">销售行政专员</span>
+                                        </div>
+                                        <div>财务</div>
+                                        <div><span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">财务分析</span><span data-v-37e9c0ae="">财务顾问</span><span data-v-37e9c0ae="">财务经理</span><span data-v-37e9c0ae="">财务主管</span><span data-v-37e9c0ae="">财务助理</span>
+                                            <span data-v-37e9c0ae="">财务总监</span><span data-v-37e9c0ae="">成本管理</span><br><span data-v-37e9c0ae="">成本会计</span><span data-v-37e9c0ae="">成本经理/主管</span><span data-v-37e9c0ae="">出纳</span><span data-v-37e9c0ae="">房地产资产管理</span>
+                                            <span data-v-37e9c0ae="">固定资产会计</span>
+                                            <span data-v-37e9c0ae="">核销员</span><span data-v-37e9c0ae="">会计经理</span><br><span data-v-37e9c0ae="">会计助理</span><span data-v-37e9c0ae="">审计</span><span data-v-37e9c0ae="">税务</span><span data-v-37e9c0ae="">注册会计师</span>
+                                            <span data-v-37e9c0ae="">资产/资金管理</span>
+                                            <span data-v-37e9c0ae="">资金专员</span><span data-v-37e9c0ae="">总账会计</span>
+                                        </div>
+                                        <div>合规风控/法务/律师</div>
+                                        <div><span data-v-37e9c0ae="">不限</span><span data-v-37e9c0ae="">法律顾问</span><span data-v-37e9c0ae="">风控</span><span data-v-37e9c0ae="">公司法务</span><span data-v-37e9c0ae="">合规稽查</span><span data-v-37e9c0ae="">律师助理</span>
+                                            <span data-v-37e9c0ae="">民事律师</span><span data-v-37e9c0ae="">企业律师/合规顾问</span><br><span data-v-37e9c0ae="">事务所律师</span><span data-v-37e9c0ae="">诉讼律师</span><span data-v-37e9c0ae="">知识产权律师</span><span data-v-37e9c0ae="">专利律师</span></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job3">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>互联网/通信及硬件</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">软件研发 通信及硬件研发</div>
+                                </div>
+                                <div class="job_content none">
+                                    <div class="jb_content">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job4">
+                            <div class="job">
+                                <div class="detail_job">
+                                    <div class="job_title">
+                                        <div>产品/项目/高级管理</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">产品经理 项目管理</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job5">
+                            <div class="job">
+                                <div class="detail_job">
+                                    <div class="job_title">
+                                        <div>金融/保险</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">银行及金融服务 投融资</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show_all">
+                            显示全部职位
+                        </div>
+                    </div>
+                    <div class="menu_body none" id="menu2">
+                        <!-- 一个内容 -->
+                        <div class="job_body" id="job6">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>哲学</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">哲学相关类</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="job_body" id="job7">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>经济学</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">经济学相关类 财政学相关类</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job8">
+                            <div class="job">
+                                <div class="job_detail">
+                                    <div class="job_title">
+                                        <div>法学</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">法学相关类 马克思注意理论相关类</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job9">
+                            <div class="job">
+                                <div class="detail_job">
+                                    <div class="job_title">
+                                        <div>教育学</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">教育相关类 小学教育相关类</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job_body" id="job10">
+                            <div class="job">
+                                <div class="detail_job">
+                                    <div class="job_title">
+                                        <div>文学</div>
+                                        <div><i data-v-37e9c0ae="" class="iconfont icon-youjiantou"></i></div>
+                                    </div>
+                                    <div class="job_description">中国语言相关类 英语相关类</div>
+                                </div>
+                                <div class="job_content none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="show_all">
+                            显示全部职位
+                        </div>
+                    </div>
+                </div>
+                <div class="lunbotu">
+                    <div class="lunbotu_grid">
+                        <div class="lunbo_box">
+                            <div id="lunbo_left">
+                                <</div>
+                                    <div id="lunbo_right">></div>
+                                    <img src="./img/lunbo1.jpg" id="lunbo" alt="" style="width: 100%; height: 100%;">
+
+                            </div>
+                            <div>
+                                <img src="./img/lunboxia1.png" alt="" style="width: 100%; height: 100%;">
+                            </div>
+                            <div>
+                                <img src="./img/lunboxia2.png" alt="" style="width: 100%; height: 100%;">
+                            </div>
+                            <div>
+                                <img src="./img/lunboxia3.png" alt="" style="width: 100%; height: 100%;">
+                            </div>
+                            <div>
+                                <img src="./img/lunboxia4.png" alt="" style="width: 100%; height: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <script>
+            var form = layui.form;
+            form.render('select')
+
+            // 点击职位搜索和专业搜索的状态切换
+            let zhiwei = document.querySelector("#zhiwei_search")
+            let zhuanye = document.querySelector("#zhuanye_search")
+            zhiwei.addEventListener('click', function() {
+                this.className = "menu_header_content menu_header_active"
+                zhuanye.className = "menu_header_content"
+                let menu1 = document.querySelector("#menu1")
+                let menu2 = document.querySelector("#menu2")
+                menu1.className = menu1.className.replaceAll(" none", "")
+                menu2.className = menu2.className + " none"
+            })
+            zhuanye.addEventListener('click', function() {
+                zhiwei.className = "menu_header_content"
+                this.className = "menu_header_content menu_header_active"
+                let menu1 = document.querySelector("#menu1")
+                let menu2 = document.querySelector("#menu2")
+                menu2.className = menu2.className.replaceAll(" none", "")
+                menu1.className = menu1.className + " none"
+
+            })
+
+            // 头部提示栏 点击叉号关闭
+            let header_notice_close = document.querySelector('#header_notice_close')
+            header_notice_close.addEventListener('click', function() {
+                this.parentNode.className = this.className + " none"
+            })
+
+            // 鼠标移入、移出工作菜单
+            for (let i = 1; i <= 10; i++) {
+                let job = document.querySelector("#job" + i)
+                job.onmouseover = function() {
+                    this.className = this.className + " job_active"
+                    let content = job.childNodes[1].childNodes[3]
+                    content.className = content.className.replaceAll(" none", "")
+                }
+                job.onmouseout = function() {
+                    this.className = this.className.replace(" job_active", "")
+                    let content = job.childNodes[1].childNodes[3]
+                    content.className = content.className + " none"
+                }
+            }
+            // 轮播图
+            let lunboIndex = 1;
+            let lunboFunction = function() {
+                return setInterval(function() {
+                    lunboIndex++;
+                    if (lunboIndex === 5) {
+                        lunboIndex = 1;
+                    }
+                    let lunbo = document.querySelector("#lunbo")
+                    lunbo.src = "./img/lunbo" + lunboIndex + ".jpg"
+                }, 2000)
+            }
+            let lunboInterval = lunboFunction();
+
+            let lunbo_left = document.querySelector("#lunbo_left")
+            let lunbo_right = document.querySelector("#lunbo_right")
+            lunbo_left.addEventListener("click", function() {
+                lunboIndex--;
+                if (lunboIndex == 0) {
+                    lunboIndex = 4;
+                }
+                let lunbo = document.querySelector("#lunbo")
+                lunbo.src = "./img/lunbo" + lunboIndex + ".jpg"
+            })
+            lunbo_right.addEventListener("click", function() {
+                lunboIndex++;
+                if (lunboIndex == 5) {
+                    lunboIndex = 1;
+                }
+                let lunbo = document.querySelector("#lunbo")
+                lunbo.src = "./img/lunbo" + lunboIndex + ".jpg"
+            })
+        </script>
+</body>
+
+</html>
